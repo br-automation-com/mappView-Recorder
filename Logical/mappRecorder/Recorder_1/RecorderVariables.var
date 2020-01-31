@@ -60,7 +60,7 @@ VAR CONSTANT
 	ERR_DAT_NAME_LENGTH : DINT := 50103; (*One or more recorder names exceeds maximum length*)
 	ERR_DAT_DEV_NAME_EMPTY : DINT := 50110; (*Device name is empty*)
 	ERR_DAT_VAR_NAME_EMPTY : DINT := 50120; (*Variable name is empty*)
-	ERR_DAT_NOT_INITIALIZED : DINT := 50130; (*Recordermanagement is not initialized*)
+	ERR_DAT_NOT_INITIALIZED : DINT := 50130; (*Recorder management is not initialized*)
 	ERR_DAT_MAX_NUM : DINT := 50200; (*Maximum number of recorders reached*)
 	ERR_DAT_TASK_NAME : DINT := 50300; (*Task name is incorrect*)
 END_VAR
