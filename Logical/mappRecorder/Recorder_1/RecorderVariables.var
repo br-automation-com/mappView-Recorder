@@ -1,0 +1,66 @@
+(*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Local constants*)
+VAR CONSTANT
+	OK : USINT := 0; (*Constant for status OK *)
+END_VAR
+(*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Local Variables*)
+VAR
+	RECORDER : REFERENCE TO datMAIN; (*Local recorder structure*)
+	RecordName : STRING[DAT_NAME_LENGTH]; (*Local recorder name*)
+	RecordFilterOld : ARRAY[0..DAT_MAX_CLIENTS_ID] OF WSTRING[DAT_NAME_LENGTH]; (*Track filter change *)
+	RecordNumOld : ARRAY[0..DAT_MAX_CLIENTS_ID] OF UINT;
+	rec_state : datSTATE := DAT_WAIT; (*Main step index *)
+	animation : USINT := 0; (*Animation for working status	*)
+	VisuSlotID : USINT; (*Slot of the visualization that is current used*)
+	idx : UINT;
+	idy : UINT;
+	has_oversized_items : BOOL; (*Indicates that at least one recorder name exceeds the maximum length*)
+	DownloadTimeout : TON_10ms;
+	ResponseHeader : httpResponseHeader_t;
+	ResponseHeaderData : STRING[300];
+	tmpStr1 : STRING[200]; (*Temporary string variable *)
+	tmpWStr1 : WSTRING[DAT_VIS_LENGTH]; (*Temporary unicode string variable *)
+	tmpWStr2 : WSTRING[DAT_VIS_LENGTH]; (*Temporary unicode string variable *)
+	lDirReadData : fiDIR_READ_EX_DATA; (*File information structure*)
+	this : STRING[100]; (*Name of the task and global recorder structure*)
+	taskID : UDINT; (*Task ID*)
+	taskGroup : USINT; (*Task Group*)
+	taskStatus : UINT; (*Status of task information*)
+	pvADR : UDINT; (*Adress of global variable structure*)
+	pvLEN : UDINT; (*Lenght of global variable structure*)
+	pvStatus : UINT; (*Status of global variable information*)
+	DoubleClickRecordName : ARRAY[0..DAT_MAX_CLIENTS_ID] OF TON_10ms;
+END_VAR
+(*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Local function calls*)
+VAR
+	DInfo : DirInfo;
+	DOpen : DirOpen;
+	DRead : DirReadEx;
+	DClose : DirClose;
+	FDelete : FileDelete;
+	FOpen : FileOpen;
+	FRead : FileReadEx;
+	FClose : FileClose;
+	MpDataRecorder_0 : MpDataRecorder;
+	MpRecorderRegPar_0 : MpDataRegPar;
+	AsMemPartCreate_0 : AsMemPartCreate;
+	AsMemPartAllocClear_0 : AsMemPartAllocClear;
+	WebserviceDownload : httpService := (0);
+END_VAR
+(*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Error numbers*)
+VAR CONSTANT
+	ERR_MEM_ALLOC : UINT := 50400; (*Memory allocation for file upload and download failed*)
+	ERR_MEM_DOWNLOAD : UINT := 50410; (*Size of download file exceeds maximum*)
+	ERR_TIMEOUT_DOWNLOAD : UINT := 50420; (*Download response timed out*)
+	ERR_DAT_TOO_MANY_CLIENTS : DINT := 50010; (*More than 3 clients try to connect to recorder management*)
+	ERR_DAT_NAME_EMPTY : DINT := 50100; (*Recorder name is empty*)
+	ERR_DAT_NAME_LENGTH : DINT := 50103; (*One or more recorder names exceeds maximum length*)
+	ERR_DAT_DEV_NAME_EMPTY : DINT := 50110; (*Device name is empty*)
+	ERR_DAT_VAR_NAME_EMPTY : DINT := 50120; (*Variable name is empty*)
+	ERR_DAT_NOT_INITIALIZED : DINT := 50130; (*Recordermanagement is not initialized*)
+	ERR_DAT_MAX_NUM : DINT := 50200; (*Maximum number of recorders reached*)
+	ERR_DAT_TASK_NAME : DINT := 50300; (*Task name is incorrect*)
+END_VAR

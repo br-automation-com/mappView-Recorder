@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BindingsSet xmlns="http://www.br-automation.com/iat2015/binding/engineering/v2" xmlns:be="http://www.br-automation.com/iat2015/bindingListEmbedded/engineering/v2" xmlns:bt="http://www.br-automation.com/iat2015/bindingListTypes/engineering/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Recorder_binding">
+	<Bindings>
+			
+		<!-- Multiple bindings from mappView to PLC />-->
+		<Binding mode="oneWayToSource">
+			<Source xsi:type="listElement">
+				<Selector xsi:type="session" refId="::SYSTEM:clientInfo.slotId" attribute="value" />
+				<be:List xsi:type="be:opcUa" attribute="value">
+					<bt:Element index="0" refId="::AsGlobalPV:Recorder_1.VIS[0].RecordFilter" />
+					<bt:Element index="1" refId="::AsGlobalPV:Recorder_1.VIS[1].RecordFilter" />
+					<bt:Element index="2" refId="::AsGlobalPV:Recorder_1.VIS[2].RecordFilter" />
+				</be:List>
+			</Source>
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecFilter" attribute="value" />
+		</Binding>
+		
+		<Binding mode="oneWayToSource">
+			<Source xsi:type="listElement">
+				<Selector xsi:type="session" refId="::SYSTEM:clientInfo.slotId" attribute="value" />
+				<be:List xsi:type="be:opcUa" attribute="value">
+					<bt:Element index="0" refId="::AsGlobalPV:Recorder_1.VIS[0].RecordSelected" />
+					<bt:Element index="1" refId="::AsGlobalPV:Recorder_1.VIS[1].RecordSelected" />
+					<bt:Element index="2" refId="::AsGlobalPV:Recorder_1.VIS[2].RecordSelected" />
+				</be:List>
+			</Source>
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="lstRecNames" attribute="selectedValue" />
+		</Binding>
+		
+		<!-- Multiple bindings from vis PLC to mappView />-->	
+		<Binding mode="oneWay">
+			<Source xsi:type="listElement">
+				<Selector xsi:type="session" refId="::SYSTEM:clientInfo.slotId" attribute="value" />
+				<be:List xsi:type="be:opcUa" attribute="value">
+					<bt:Element index="0" refId="::AsGlobalPV:Recorder_1.VIS[0].RecordNames" />
+					<bt:Element index="1" refId="::AsGlobalPV:Recorder_1.VIS[1].RecordNames" />
+					<bt:Element index="2" refId="::AsGlobalPV:Recorder_1.VIS[2].RecordNames" />
+				</be:List>
+			</Source>
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="lstRecNames" attribute="dataProvider" />
+		</Binding>
+		
+		<Binding mode="oneWay">
+			<Source xsi:type="listElement">
+				<Selector xsi:type="session" refId="::SYSTEM:clientInfo.slotId" attribute="value" />
+				<be:List xsi:type="be:opcUa" attribute="value">
+					<bt:Element index="0" refId="::AsGlobalPV:Recorder_1.VIS[0].RecordNum" />
+					<bt:Element index="1" refId="::AsGlobalPV:Recorder_1.VIS[1].RecordNum" />
+					<bt:Element index="2" refId="::AsGlobalPV:Recorder_1.VIS[2].RecordNum" />
+				</be:List>
+			</Source>
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="numRecItems" attribute="value" />
+		</Binding>
+		
+		<Binding mode="oneWay">
+			<Source xsi:type="listElement">
+				<Selector xsi:type="session" refId="::SYSTEM:clientInfo.slotId" attribute="value" />
+				<be:List xsi:type="be:opcUa" attribute="value">
+					<bt:Element index="0" refId="::AsGlobalPV:Recorder_1.VIS[0].EnableButtons" />
+					<bt:Element index="1" refId="::AsGlobalPV:Recorder_1.VIS[1].EnableButtons" />
+					<bt:Element index="2" refId="::AsGlobalPV:Recorder_1.VIS[2].EnableButtons" />
+				</be:List>
+			</Source>
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="btnRecDelete" attribute="enable" />
+		</Binding>
+		
+		<Binding mode="oneWay">
+			<Source xsi:type="listElement">
+				<Selector xsi:type="session" refId="::SYSTEM:clientInfo.slotId" attribute="value" />
+				<be:List xsi:type="be:opcUa" attribute="value">
+					<bt:Element index="0" refId="::AsGlobalPV:Recorder_1.VIS[0].EnableButtons" />
+					<bt:Element index="1" refId="::AsGlobalPV:Recorder_1.VIS[1].EnableButtons" />
+					<bt:Element index="2" refId="::AsGlobalPV:Recorder_1.VIS[2].EnableButtons" />
+				</be:List>
+			</Source>
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="btnRecViewFile" attribute="enable" />
+		</Binding>
+		
+		<Binding mode="oneWay">
+			<Source xsi:type="listElement">
+				<Selector xsi:type="session" refId="::SYSTEM:clientInfo.slotId" attribute="value" />
+				<be:List xsi:type="be:opcUa" attribute="value">
+					<bt:Element index="0" refId="::AsGlobalPV:Recorder_1.VIS[0].EnableButtons" />
+					<bt:Element index="1" refId="::AsGlobalPV:Recorder_1.VIS[1].EnableButtons" />
+					<bt:Element index="2" refId="::AsGlobalPV:Recorder_1.VIS[2].EnableButtons" />
+				</be:List>
+			</Source>
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="btnRecDownload" attribute="enable" />
+		</Binding>
+		
+		<Binding mode="oneWay">
+			<Source xsi:type="listElement">
+				<Selector xsi:type="session" refId="::SYSTEM:clientInfo.slotId" attribute="value" />
+				<be:List xsi:type="be:opcUa" attribute="value">
+					<bt:Element index="0" refId="::AsGlobalPV:Recorder_1.VIS[0].DownloadFileUrl" />
+					<bt:Element index="1" refId="::AsGlobalPV:Recorder_1.VIS[1].DownloadFileUrl" />
+					<bt:Element index="2" refId="::AsGlobalPV:Recorder_1.VIS[2].DownloadFileUrl" />
+				</be:List>
+			</Source>
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="RecWebDownload" attribute="path" />
+		</Binding>
+			
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:RecorderData.Temperature1" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecTemp1" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:RecorderData.Temperature2" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecTemp2" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:RecorderData.MotorSpeed" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecSpeed" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:RecorderData.Position" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecPosition" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.RecordMode" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="drpRecType" attribute="selectedIndex" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.RecordInterval" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecInterval" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.CMD.Record" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="btnRecStartStop" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.IsRecording" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="StatusRecording" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.SamplesNum" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="numRecSamplesNo" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.ERR.No" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="numRecErrorNo" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.ERR.Text" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecErrorText" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.DAT.Status" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecStatus" attribute="value" />
+		</Binding>			
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.Initialized" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="StatusInitialized" attribute="value" />
+		</Binding>
+
+	<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.VIS[0].EnableButtons" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="Button1" attribute="enable" />
+</Binding>
+</Bindings>
+</BindingsSet>
