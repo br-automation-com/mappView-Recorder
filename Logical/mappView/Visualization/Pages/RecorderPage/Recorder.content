@@ -19,7 +19,6 @@
         <Widget xsi:type="widgets.brease.Button" id="btnRecViewFile" top="558" left="164" width="130" height="40" zIndex="26" text="Open" cornerRadius="10px" />
         <Widget xsi:type="widgets.brease.WebViewer" id="RecWebDownload" top="388" left="499" width="86" height="42" zIndex="27" path="" borderStyle="none" visible="false" />
         <Widget xsi:type="widgets.brease.Button" id="btnRecDownload" top="453" left="489" width="130" height="40" zIndex="28" text="Download" cornerRadius="10px" />
-        <Widget xsi:type="widgets.brease.Button" id="Button1" top="458" left="684" zIndex="29" text="Button1" />
       </Widgets>
     </Widget>
     <Widget xsi:type="widgets.brease.GroupBox" id="grpFileExplorerStatus" top="10" left="5" width="1185" height="130" zIndex="1" text="Status">

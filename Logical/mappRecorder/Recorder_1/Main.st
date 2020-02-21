@@ -514,15 +514,13 @@ PROGRAM _CYCLIC
 			WebserviceDownload();
 			
 			// ----------------------------------------------------------------------------------------
-			// Start sending data
-			IF (WebserviceDownload.status = OK AND WebserviceDownload.send = FALSE) THEN
-				WebserviceDownload.send := TRUE;
-				// Sending data finished
-			ELSIF (WebserviceDownload.send = TRUE) THEN
+			// Finish sending data
+			IF (WebserviceDownload.phase = httpPHASE_WAITING) THEN 
+				RECORDER.VIS[RECORDER.PAR.VisuSlotID].DownloadFileUrl := '';
 				WebserviceDownload.send := FALSE;
 				RECORDER.CMD.Download	:= 0;
 				rec_state := DAT_WAIT;
-				// Error
+			// Error
 			ELSIF (WebserviceDownload.status <> ERR_FUB_BUSY) THEN
 				CreateError(ADR(RECORDER), WebserviceDownload.status, "error sending web response", rec_state);
 			END_IF
