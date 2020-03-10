@@ -152,10 +152,5 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.Initialized" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="StatusInitialized" attribute="value" />
 		</Binding>
-
-	<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.VIS[0].EnableButtons" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="Button1" attribute="enable" />
-</Binding>
-</Bindings>
+	</Bindings>
 </BindingsSet>
