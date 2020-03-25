@@ -1,3 +1,6 @@
+Next version 
+- Fixed oversized item flag is not reset
+
 Version 0.2
 - Fixed download not working when downloading the same file again 
 

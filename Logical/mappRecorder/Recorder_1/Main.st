@@ -223,6 +223,7 @@ PROGRAM _CYCLIC
 			// ---------------------------------------------------------------------------------------- 		
 			// OK																																				
 			IF (DOpen.status = OK) THEN
+				has_oversized_items := FALSE;
 				rec_state := DAT_READ_DIR_2;
 			// Error
 			ELSIF (DOpen.status <> ERR_FUB_BUSY) THEN
