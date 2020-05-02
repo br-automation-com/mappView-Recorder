@@ -464,7 +464,7 @@ PROGRAM _CYCLIC
 			// Create response header
 			ResponseHeaderData :=  'Content-Type: application/octet-stream; Content-Transfer-Encoding: binary; Content-Disposition: attachment; filename="';
 			brsstrcpy(ADR(tmpStr1), ADR(RecordName));
-			ReplaceString(ADR(tmpStr1), ADR(' '), ADR('%20'));
+			ReplaceString(ADR(tmpStr1), ADR(' '), ADR('%20'), FALSE);
 			brsstrcat(ADR(ResponseHeaderData), ADR(tmpStr1));
 			brsstrcat(ADR(ResponseHeaderData), ADR('"'));
 			

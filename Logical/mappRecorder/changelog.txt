@@ -1,5 +1,6 @@
-Next version 
+Version 0.3
 - Fixed oversized item flag is not reset
+- Fixed ReplaceString function call
 - Update mapp to version 5.8.1
 
 Version 0.2
