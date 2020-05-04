@@ -23,6 +23,8 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 0.1
-- First public release
+#### Version 0.3
+- Fixed oversized item flag is not reset
+- Fixed ReplaceString function call
+- Update mapp to version 5.8.1
 
