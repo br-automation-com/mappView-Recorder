@@ -307,7 +307,10 @@ PROGRAM _CYCLIC
 			MpDataRecorder_0.Enable := TRUE;
 			MpDataRecorder_0.MpLink := ADR(RECORDER.PAR.MpLink);
 			MpDataRecorder_0.DeviceName := ADR(RECORDER.PAR.DeviceName);
-			MpDataRecorder_0.Record := RECORDER.CMD.Record OR RECORDER.CMD.Trigger;
+			
+			IF (MpDataRecorder_0.Active) THEN
+				MpDataRecorder_0.Record := RECORDER.CMD.Record OR RECORDER.CMD.Trigger;
+			END_IF;
 										
 			// ---------------------------------------------------------------------------------------- 		
 			// OK																																				
@@ -315,7 +318,7 @@ PROGRAM _CYCLIC
 				// Command record by trigger 
 				IF(RECORDER.CMD.Trigger) THEN
 					// Fire trigger when recording is engaged
-					IF(NOT MpDataRecorder_0.Trigger) THEN
+					IF (NOT MpDataRecorder_0.Trigger) THEN
 						MpDataRecorder_0.Trigger := TRUE;
 					// Reset trigger when event was recorded
 					ELSE
@@ -328,7 +331,7 @@ PROGRAM _CYCLIC
 						END_IF
 					END_IF
 				// Recording disabled
-				ELSIF(NOT RECORDER.CMD.Record) THEN
+				ELSIF (NOT RECORDER.CMD.Record) THEN
 					rec_state := DAT_READ_DIR;					
 				END_IF
 			// Error

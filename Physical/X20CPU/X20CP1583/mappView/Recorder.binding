@@ -124,10 +124,7 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.RecordInterval" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecInterval" attribute="value" />
 		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.CMD.Record" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="btnRecStartStop" attribute="value" />
-		</Binding>
+		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.IsRecording" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="StatusRecording" attribute="value" />
@@ -151,6 +148,10 @@
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.Initialized" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="StatusInitialized" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.CMD.Record" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="btnRecStartStop" attribute="value" />
 		</Binding>
 	</Bindings>
 </BindingsSet>
