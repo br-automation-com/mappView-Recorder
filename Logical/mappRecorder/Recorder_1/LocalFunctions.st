@@ -15,7 +15,7 @@ END_FUNCTION
 // Create error																						
 //******************************************************************************************************
 FUNCTION CreateError
-	RECORDER.ERR.No := No;
+	RECORDER.StatusNo := No;
 	RECORDER.ERR.State := State;
 	RECORDER.ERR.Text := Text;
 	CreateError := DAT_ERROR;
@@ -46,13 +46,13 @@ FUNCTION WorkingStatus
 		animation := 0;
 	END_IF
 	
-	brsmemset(ADR(RECORDER.DAT.Status), 0, SIZEOF(RECORDER.DAT.Status));
-	brwcscpy(ADR(RECORDER.DAT.Status), str);
+	brsmemset(ADR(RECORDER.StatusText), 0, SIZEOF(RECORDER.StatusText));
+	brwcscpy(ADR(RECORDER.StatusText), str);
 	CASE(animation) OF
-		0..19	: brwcscat(ADR(RECORDER.DAT.Status), ADR("/"));
-		20..39	: brwcscat(ADR(RECORDER.DAT.Status), ADR("-"));
-		40..59	: brwcscat(ADR(RECORDER.DAT.Status), ADR("\"));
-		60..79	: brwcscat(ADR(RECORDER.DAT.Status), ADR("|"));
+		0..19	: brwcscat(ADR(RECORDER.StatusText), ADR("/"));
+		20..39	: brwcscat(ADR(RECORDER.StatusText), ADR("-"));
+		40..59	: brwcscat(ADR(RECORDER.StatusText), ADR("\"));
+		60..79	: brwcscat(ADR(RECORDER.StatusText), ADR("|"));
 	END_CASE;
 	WorkingStatus := animation;
 END_FUNCTION

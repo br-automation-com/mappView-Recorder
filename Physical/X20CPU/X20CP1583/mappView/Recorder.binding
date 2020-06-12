@@ -99,23 +99,7 @@
 			</Source>
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="RecWebDownload" attribute="path" />
 		</Binding>
-			
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:RecorderData.Temperature1" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecTemp1" attribute="value" />
-		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:RecorderData.Temperature2" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecTemp2" attribute="value" />
-		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:RecorderData.MotorSpeed" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecSpeed" attribute="value" />
-		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:RecorderData.Position" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecPosition" attribute="value" />
-		</Binding>
+		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.RecordMode" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="drpRecType" attribute="selectedIndex" />
@@ -123,8 +107,7 @@
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.RecordInterval" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecInterval" attribute="value" />
-		</Binding>
-		
+		</Binding>	
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.IsRecording" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="StatusRecording" attribute="value" />
@@ -134,17 +117,10 @@
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="numRecSamplesNo" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.ERR.No" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="numRecErrorNo" attribute="value" />
-		</Binding>
-		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.ERR.Text" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecErrorText" attribute="value" />
 		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.DAT.Status" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecStatus" attribute="value" />
-		</Binding>			
+					
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.Initialized" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="StatusInitialized" attribute="value" />
@@ -153,5 +129,34 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.CMD.Record" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="btnRecStartStop" attribute="value" />
 		</Binding>
-	</Bindings>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::YourTask:Temperature1" attribute="node" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecTemp1" attribute="node" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::YourTask:Temperature2" attribute="node" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecTemp2" attribute="node" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::YourTask:MotorSpeed" attribute="node" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecSpeed" attribute="node" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::YourTask:Position" attribute="node" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecPosition" attribute="node" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.StatusNo" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="numRecStatusNo" attribute="value" />
+		</Binding>
+	<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.StatusText" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecStatus" attribute="value" />
+</Binding>
+
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:Recorder_1.PAR.RecordNameNew" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentRecorder" widgetRefId="txtRecName" attribute="value" />
+</Binding>
+</Bindings>
 </BindingsSet>

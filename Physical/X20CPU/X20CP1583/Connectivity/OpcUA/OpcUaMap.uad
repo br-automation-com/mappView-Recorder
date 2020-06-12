@@ -19,8 +19,13 @@
         <Variable Name="Recorder_1" AutomaticEnable="True">
           <Variable Name="VIS" EnableArrayElements="True" />
         </Variable>
-        <Variable Name="RecorderData" AutomaticEnable="True" />
       </GlobalVariables>
+      <Task Name="YourTask">
+        <Variable Name="MotorSpeed" />
+        <Variable Name="Position" />
+        <Variable Name="Temperature1" />
+        <Variable Name="Temperature2" />
+      </Task>
     </Module>
   </DefaultView>
 </OpcUaSource>

@@ -1,0 +1,26 @@
+(*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Configuration for recorder managment*)
+VAR CONSTANT
+	DAT_MAX_NUM : USINT := 100; (*Maximum number of record files*)
+	DAT_NAME_LENGTH : USINT := 40; (*Maximum length for a record name*)
+	DAT_VIS_LENGTH : USINT := 120; (*Make this DAT_NAME_LENGTH  x3*)
+	DAT_MAX_CLIENTS_ID : USINT := 2; (*Highest client ID for concurrent web client connections. Do not change this number.*)
+END_VAR
+VAR
+	DAT_VIEW_FILTER : ARRAY[0..9] OF STRING[5] := ['csv','pdf',8('')]; (*Files extensions than can be used with the view command*)
+END_VAR
+VAR CONSTANT
+	DAT_DOWNLOAD_SIZE : UDINT := 500000; (*Maximum size of memory allocated for uploading and downloading files*)
+	DAT_VAR_NUM : USINT := 10; (*Maximum number of variables that can be registered*)
+	DAT_THIS_TASK : STRING[40] := 'Recorder_1'; (*Name of this task and the global variables structure*)
+	DAT_DEVICE : STRING[80] := 'RECORDER_DEVICE'; (*Device name for the recorder data defined under File Devices in the CPU configuration*)
+END_VAR
+VAR
+	DAT_MPLINK : {REDUND_UNREPLICABLE} STRING[80] := 'gDataRecorder_1'; (*mappRecoreer link name from configuration view*)
+END_VAR
+(*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Add you variables to this list*)
+VAR
+	DAT_VAR_LIST : ARRAY[1..DAT_VAR_NUM] OF STRING[100] := ['YourTask:Temperature1','YourTask:Temperature2','YourTask:MotorSpeed','YourTask:Position',6('')]; (*List of variables to be inlcuded in a record*)
+	Recorder_1 : datMAIN; (*Global record structure. The name must match the task name of the recorder managment.*)
+END_VAR

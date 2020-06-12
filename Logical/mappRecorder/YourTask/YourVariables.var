@@ -1,0 +1,6 @@
+VAR
+	Position : REAL;
+	MotorSpeed : DINT;
+	Temperature2 : DINT;
+	Temperature1 : DINT;
+END_VAR
