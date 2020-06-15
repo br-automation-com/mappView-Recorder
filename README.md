@@ -23,8 +23,13 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 0.3
-- Fixed oversized item flag is not reset
-- Fixed ReplaceString function call
-- Update mapp to version 5.8.1
+#### Version 0.4
+- Only start recording when FUB is active
+- Changed some parameters to constants
+- Simplified configuration
+- Added more error messages
+- Added the possibility to define multiple variables
+- Moved status text to main structure
+- Moved error no up to main structure and renamed it to StatusNo
+- Rercord name can now be defined at RecordNameNew
 
