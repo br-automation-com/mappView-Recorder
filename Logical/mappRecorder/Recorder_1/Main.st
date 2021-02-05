@@ -472,10 +472,11 @@ PROGRAM _CYCLIC
 					// File is too large
 				ELSE			
 					tmpWStr1 := "download file exceeds maximum buffer size of ";
-					brsitoa(DAT_DOWNLOAD_SIZE, ADR(tmpWStr2));
-					brsstrcat(ADR(tmpWStr1), ADR(tmpWStr1));
-					brsstrcat(ADR(tmpWStr1), ADR(" bytes"));				
-					CreateError(ADR(RECORDER), ERR_MEM_DOWNLOAD, tmpWStr1, rec_state);
+					brsitoa(DAT_DOWNLOAD_SIZE, ADR(tmpStr1));
+					brwcsconv(ADR(tmpWStr2),ADR(tmpStr1), brwU8toUC);
+					brwcscat(ADR(tmpWStr1), ADR(tmpWStr2));
+					brwcscat(ADR(tmpWStr1), ADR(" bytes"));				
+					rec_state := CreateError(ADR(RECORDER), ERR_MEM_DOWNLOAD, tmpWStr1, rec_state);
 				END_IF;
 			// ---------------------------------------------------------------------------------------- 		
 			// Error
