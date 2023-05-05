@@ -13,16 +13,18 @@ Also see [**How to import the recorder management into an existing project.**](/
 
 <a name="Requirements"></a>
 ## Requirements
-* Automation Studio 4.5
-* mappView 5.7.1
-* mappServices 5.7.1
-* Automation Runtime B4.53
+* Automation Studio 4.9
+* mappView 5.15
+* mappServices 5.15
+* Automation Runtime C4.90
 
 Recommended task class is #8 with a 10ms cycle time.
 
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 0.5 (05.02.2021)
-- Fixed memory violation when file exceeds download buffer size
+#### Version 0.6 (05.05.2023)
+- Updated Automation Studio and mapp components
+- Added new command LoadConfig to load a variable list from a file
+- Minor bug fixes
 
