@@ -14,6 +14,7 @@ VAR CONSTANT
 	DAT_VAR_NUM : USINT := 10; (*Maximum number of variables that can be registered*)
 	DAT_THIS_TASK : STRING[40] := 'Recorder_1'; (*Name of this task and the global variables structure*)
 	DAT_DEVICE : STRING[80] := 'RECORDER_DEVICE'; (*Device name for the recorder data defined under File Devices in the CPU configuration*)
+	DAT_CONFIG : STRING[80] := 'var_list.csv'; (*File with a list of variables in CSV format*)
 END_VAR
 VAR
 	DAT_MPLINK : {REDUND_UNREPLICABLE} STRING[80] := 'gDataRecorder_1'; (*mappRecoreer link name from configuration view*)

@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EventBindingSet id="Recorder_eventbinding" xmlns="http://www.br-automation.com/iat2014/eventbinding/v2" xmlns:types="http://www.br-automation.com/iat2015/widgetTypes/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Bindings>
+    <EventBinding id="Recorder_1.btnRecDownload.Click">
+      <Source xsi:type="widgets.brease.Button.Event" contentRefId="contentRecorder" widgetRefId="btnRecDownload" event="Click" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="ANY_STRING" name="lstRecNames">
+        <ReadTarget xsi:type="widgets.brease.ListBox.ReadAction" contentRefId="contentRecorder" widgetRefId="lstRecNames">
+          <Method xsi:type="widgets.brease.ListBox.Action.GetSelectedValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="BOOL" name="DownloadCommand">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::AsGlobalPV:Recorder_1.CMD.Download">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="NOT DownloadCommand">
+        <Sequence>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.PAR.VisuSlotID">
+                <Method xsi:type="opcUa.NodeAction.SetValueNumber" value="=slotId" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="2">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.PAR.RecordName">
+                <Method xsi:type="opcUa.NodeAction.SetValueString" value="=lstRecNames" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="3">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.CMD.Download">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="contentRecorder.btnRecViewFile.Click">
+      <Source xsi:type="widgets.brease.Button.Event" contentRefId="contentRecorder" widgetRefId="btnRecViewFile" event="Click" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler>
+        <Sequence>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.PAR.VisuSlotID">
+                <Method xsi:type="opcUa.NodeAction.SetValueNumber" value="=slotId" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="2">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.CMD.View">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="contentRecorder.lstRecNames.Click">
+      <Source xsi:type="widgets.brease.ListBox.Event" contentRefId="contentRecorder" widgetRefId="lstRecNames" event="Click" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="slotId=0">
+        <Action>
+          <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.VIS[0].RecordDoubleClick">
+            <Method xsi:type="opcUa.NodeAction.AddValue" value="1" />
+          </Target>
+        </Action>
+      </EventHandler>
+      <EventHandler condition="slotId=1">
+        <Action>
+          <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.VIS[1].RecordDoubleClick">
+            <Method xsi:type="opcUa.NodeAction.AddValue" value="1" />
+          </Target>
+        </Action>
+      </EventHandler>
+      <EventHandler condition="slotId=2">
+        <Action>
+          <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.VIS[2].RecordDoubleClick">
+            <Method xsi:type="opcUa.NodeAction.AddValue" value="1" />
+          </Target>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.VIS[0].ViewFilePath">
+      <Source xsi:type="opcUa.Event" refId="::AsGlobalPV:Recorder_1.VIS[0].ViewFile" event="ValueChanged" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="ANY_STRING" name="RecordOpenFile">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::AsGlobalPV:Recorder_1.VIS[0].ViewFilePath">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="slotId=0 AND newValue">
+        <Sequence>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="widgets.brease.WebViewer.Action" contentRefId="contentRecorder" widgetRefId="webViewFile">
+                <Method xsi:type="widgets.brease.WebViewer.Action.SetSrc" value="=RecordOpenFile" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="2">
+            <Action>
+              <Target xsi:type="widgets.brease.FlyOut.Action" contentRefId="contentRecorder" widgetRefId="flyViewFile">
+                <Method xsi:type="widgets.brease.FlyOut.Action.Open" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="3">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.VIS[0].ViewFile">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="false" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.VIS[1].ViewFilePath">
+      <Source xsi:type="opcUa.Event" refId="::AsGlobalPV:Recorder_1.VIS[1].ViewFile" event="ValueChanged" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="ANY_STRING" name="RecordOpenFile">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::AsGlobalPV:Recorder_1.VIS[1].ViewFilePath">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="slotId=1 AND newValue">
+        <Sequence>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="widgets.brease.WebViewer.Action" contentRefId="contentRecorder" widgetRefId="webViewFile">
+                <Method xsi:type="widgets.brease.WebViewer.Action.SetSrc" value="=RecordOpenFile" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="2">
+            <Action>
+              <Target xsi:type="widgets.brease.FlyOut.Action" contentRefId="contentRecorder" widgetRefId="flyViewFile">
+                <Method xsi:type="widgets.brease.FlyOut.Action.Open" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="3">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.VIS[1].ViewFile">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="false" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.VIS[2].ViewFilePath">
+      <Source xsi:type="opcUa.Event" refId="::AsGlobalPV:Recorder_1.VIS[2].ViewFile" event="ValueChanged" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="ANY_STRING" name="RecordOpenFile">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::AsGlobalPV:Recorder_1.VIS[2].ViewFilePath">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="slotId=2 AND newValue">
+        <Sequence>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="widgets.brease.WebViewer.Action" contentRefId="contentRecorder" widgetRefId="webViewFile">
+                <Method xsi:type="widgets.brease.WebViewer.Action.SetSrc" value="=RecordOpenFile" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="2">
+            <Action>
+              <Target xsi:type="widgets.brease.FlyOut.Action" contentRefId="contentRecorder" widgetRefId="flyViewFile">
+                <Method xsi:type="widgets.brease.FlyOut.Action.Open" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="3">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.VIS[2].ViewFile">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="false" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="contentRecorder.btnCloseViewFile.Click">
+      <Source xsi:type="widgets.brease.Button.Event" contentRefId="contentRecorder" widgetRefId="btnCloseViewFile" event="Click" />
+      <EventHandler>
+        <Action>
+          <Target xsi:type="widgets.brease.FlyOut.Action" contentRefId="contentRecorder" widgetRefId="flyViewFile">
+            <Method xsi:type="widgets.brease.FlyOut.Action.Close" />
+          </Target>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="eventbinding_0">
+      <Source xsi:type="clientSystem.Event" event="ContentLoaded" />
+      <EventHandler>
+        <Action>
+          <Target xsi:type="widgets.brease.ListBox.Action" contentRefId="contentRecorder" widgetRefId="lstRecNames">
+            <Method xsi:type="widgets.brease.ListBox.Action.SetSelectedIndex" index="0" />
+          </Target>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.CMD.Init_0">
+      <Source xsi:type="opcUa.Event" refId="::AsGlobalPV:Recorder_1.CMD.Init" event="ValueChanged" />
+      <EventHandler condition="NOT newValue">
+        <Action>
+          <Target xsi:type="widgets.brease.ListBox.Action" contentRefId="contentRecorder" widgetRefId="lstRecNames">
+            <Method xsi:type="widgets.brease.ListBox.Action.SetSelectedIndex" index="0" />
+          </Target>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.btnRecRefresh.Click">
+      <Source xsi:type="widgets.brease.Button.Event" contentRefId="contentRecorder" widgetRefId="btnRecRefresh" event="Click" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler>
+        <Sequence>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.PAR.VisuSlotID">
+                <Method xsi:type="opcUa.NodeAction.SetValueNumber" value="=slotId" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="2">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.CMD.Init">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.btnRecTrigger.Click">
+      <Source xsi:type="widgets.brease.Button.Event" contentRefId="contentRecorder" widgetRefId="btnRecTrigger" event="Click" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler>
+        <Sequence>
+          <Step order="1">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.PAR.VisuSlotID">
+                <Method xsi:type="opcUa.NodeAction.SetValueNumber" value="=slotId" />
+              </Target>
+            </Action>
+          </Step>
+          <Step order="2">
+            <Action>
+              <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.CMD.Trigger">
+                <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+              </Target>
+            </Action>
+          </Step>
+        </Sequence>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.btnRecDelete.Click">
+      <Source xsi:type="widgets.brease.Button.Event" contentRefId="contentRecorder" widgetRefId="btnRecDelete" event="Click" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="ANY_STRING" name="lstRecNames">
+        <ReadTarget xsi:type="widgets.brease.ListBox.ReadAction" contentRefId="contentRecorder" widgetRefId="lstRecNames">
+          <Method xsi:type="widgets.brease.ListBox.Action.GetSelectedValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="BOOL" name="DeleteCommand">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::AsGlobalPV:Recorder_1.CMD.Delete">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="NOT DeleteCommand">
+        <Action>
+          <Target xsi:type="clientSystem.Action">
+            <Method xsi:type="clientSystem.Action.ShowMessageBox" type="YesNo" message="Delete record?" header="=lstRecNames" icon="Question" />
+          </Target>
+          <Result>
+            <ResultHandler condition="result = 1">
+              <Sequence>
+                <Step order="1">
+                  <Action>
+                    <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.PAR.VisuSlotID">
+                      <Method xsi:type="opcUa.NodeAction.SetValueNumber" value="=slotId" />
+                    </Target>
+                  </Action>
+                </Step>
+                <Step order="2">
+                  <Action>
+                    <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.PAR.RecordName">
+                      <Method xsi:type="opcUa.NodeAction.SetValueString" value="=lstRecNames" />
+                    </Target>
+                  </Action>
+                </Step>
+                <Step order="3">
+                  <Action>
+                    <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.CMD.Delete">
+                      <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+                    </Target>
+                  </Action>
+                </Step>
+              </Sequence>
+            </ResultHandler>
+          </Result>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.btnRecClearFilter.Click">
+      <Source xsi:type="widgets.brease.Button.Event" contentRefId="contentRecorder" widgetRefId="btnRecClearFilter" event="Click" />
+      <EventHandler>
+        <Action>
+          <Target xsi:type="widgets.brease.TextInput.Action" contentRefId="contentRecorder" widgetRefId="txtRecFilter">
+            <Method xsi:type="widgets.brease.TextInput.Action.SetValue" value="" />
+          </Target>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="EventBinding_1">
+      <Source xsi:type="widgets.brease.Button.Event" contentRefId="contentRecorder" widgetRefId="btnRecLoadCfg" event="Click" />
+      <EventHandler condition="">
+        <Action>
+          <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.CMD.LoadConfig">
+            <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+          </Target>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.ShowMessageBoxError_0">
+      <Source xsi:type="opcUa.Event" refId="::AsGlobalPV:Recorder_1.VIS[0].ShowMessageBoxError" event="ValueChanged" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="ANY_STRING" name="MessageBoxText">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::AsGlobalPV:Recorder_1.ERR.Text">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="slotId=0 AND newValue">
+        <Action>
+          <Target xsi:type="clientSystem.Action">
+            <Method xsi:type="clientSystem.Action.ShowMessageBox" type="OK" message="=MessageBoxText" header="Error" icon="Error" />
+          </Target>
+          <Result>
+            <ResultHandler condition="result = 4">
+              <Action>
+                <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.CMD.ErrorReset">
+                  <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+                </Target>
+              </Action>
+            </ResultHandler>
+          </Result>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.ShowMessageBoxError_1">
+      <Source xsi:type="opcUa.Event" refId="::AsGlobalPV:Recorder_1.VIS[1].ShowMessageBoxError" event="ValueChanged" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="ANY_STRING" name="MessageBoxText">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::AsGlobalPV:Recorder_1.ERR.Text">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="slotId=1 AND newValue">
+        <Action>
+          <Target xsi:type="clientSystem.Action">
+            <Method xsi:type="clientSystem.Action.ShowMessageBox" type="OK" message="=MessageBoxText" header="Error" icon="Error" />
+          </Target>
+          <Result>
+            <ResultHandler condition="result = 4">
+              <Action>
+                <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.CMD.ErrorReset">
+                  <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+                </Target>
+              </Action>
+            </ResultHandler>
+          </Result>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+    <EventBinding id="Recorder_1.ShowMessageBoxError_2">
+      <Source xsi:type="opcUa.Event" refId="::AsGlobalPV:Recorder_1.VIS[2].ShowMessageBoxError" event="ValueChanged" />
+      <Operand datatype="ANY_INT" name="slotId">
+        <ReadTarget xsi:type="session.VariableAction.Read" refId="::SYSTEM:clientInfo.slotId">
+          <Method xsi:type="session.VariableAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <Operand datatype="ANY_STRING" name="MessageBoxText">
+        <ReadTarget xsi:type="opcUa.NodeAction.Read" refId="::AsGlobalPV:Recorder_1.ERR.Text">
+          <Method xsi:type="opcUa.NodeAction.GetValue" />
+        </ReadTarget>
+      </Operand>
+      <EventHandler condition="slotId=2 AND newValue">
+        <Action>
+          <Target xsi:type="clientSystem.Action">
+            <Method xsi:type="clientSystem.Action.ShowMessageBox" type="OK" message="=MessageBoxText" header="Error" icon="Error" />
+          </Target>
+          <Result>
+            <ResultHandler condition="result = 4">
+              <Action>
+                <Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:Recorder_1.CMD.ErrorReset">
+                  <Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+                </Target>
+              </Action>
+            </ResultHandler>
+          </Result>
+        </Action>
+      </EventHandler>
+    </EventBinding>
+  </Bindings>
+</EventBindingSet>

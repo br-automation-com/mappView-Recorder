@@ -1,6 +1,6 @@
 /* Automation Studio generated header file */
 /* Do not edit ! */
-/* MpFile 5.08.1 */
+/* MpFile 5.15.0 */
 
 #ifndef _MPFILE_
 #define _MPFILE_
@@ -9,7 +9,7 @@ extern "C"
 {
 #endif
 #ifndef _MpFile_VERSION
-#define _MpFile_VERSION 5.08.1
+#define _MpFile_VERSION 5.15.0
 #endif
 
 #include <bur/plctypes.h>
@@ -17,12 +17,12 @@ extern "C"
 #ifndef _BUR_PUBLIC
 #define _BUR_PUBLIC
 #endif
-#ifdef _SG4
+#ifdef _SG3
 		#include "MpBase.h"
 		#include "FileIO.h"
 #endif
 
-#ifdef _SG3
+#ifdef _SG4
 		#include "MpBase.h"
 		#include "FileIO.h"
 #endif
@@ -31,6 +31,8 @@ extern "C"
 		#include "MpBase.h"
 		#include "FileIO.h"
 #endif
+
+
 
 /* Datatypes and datatypes of function blocks */
 typedef enum MpFileManagerUIItemTypeEnum
@@ -107,7 +109,18 @@ typedef enum MpFileErrorEnum
 	mpFILE_ERR_NAME_EMPTY = -1064165370,
 	mpFILE_ERR_INVALID_NAME = -1064165369,
 	mpFILE_ERR_PASTE_NOT_ALLOWED = -1064165368,
-	mpFILE_ERR_FILE_SYSTEM = -1064165367
+	mpFILE_ERR_FILE_SYSTEM = -1064165367,
+	mpFILE_ERR_INSUFF_ACCESS_RIGHT = -1064165358,
+	mpFILE_ERR_ITEM_IS_LOCKED = -1064165357,
+	mpFILE_ERR_COPY_ITEM = -1064165356,
+	mpFILE_ERR_ERASE_ITEM = -1064165355,
+	mpFILE_ERR_INVALID_PATH = -1064165354,
+	mpFILE_ERR_INVALID_PARAMETER = -1064165353,
+	mpFILE_ERR_RENAME_ITEM = -1064165352,
+	mpFILE_ERR_CREATE_ITEM = -1064165351,
+	mpFILE_ERR_READ_ITEM = -1064165350,
+	mpFILE_ERR_WRITE_ITEM = -1064165349,
+	mpFILE_INF_OVERWRITE = 1083318300
 } MpFileErrorEnum;
 
 typedef enum MpFileUIAlarmEnum

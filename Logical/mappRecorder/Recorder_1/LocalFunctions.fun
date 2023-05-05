@@ -45,7 +45,7 @@ FUNCTION InsertRecName : UINT
 	END_VAR
 END_FUNCTION
 
-FUNCTION IsInstr : BOOL
+FUNCTION IsInstr : UDINT
 	VAR_INPUT
 		string1 : UDINT;
 		string2 : UDINT;

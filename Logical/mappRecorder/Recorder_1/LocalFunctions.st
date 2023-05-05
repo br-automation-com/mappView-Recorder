@@ -119,8 +119,8 @@ END_FUNCTION
 FUNCTION IsInstr	
 	IF (brsstrlen(string1) >= brsstrlen(string2)) THEN
 		FOR idx:=0 TO brsstrlen(string1) - brsstrlen(string2) DO
-			IF (brsmemcmp(string1 + (2*idx), string2, brsstrlen(string2)) = 0) THEN
-				IsInstr := TRUE;
+			IF (brsmemcmp(string1 + idx, string2, brsstrlen(string2)) = 0) THEN
+				IsInstr := idx;
 				EXIT;
 			END_IF
 		END_FOR;

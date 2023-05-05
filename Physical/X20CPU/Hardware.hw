@@ -1,12 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?AutomationStudio Version=4.5.5.113?>
+<?AutomationStudio Version=4.9.5.36 FileVersion="4.9"?>
 <Hardware xmlns="http://br-automation.co.at/AS/Hardware">
-  <Module Name="X20CP1583" Type="X20CP1583" Version="1.5.0.0">
+  <Module Name="X20CP3687X" Type="X20CP3687X" Version="1.7.2.0">
     <Connector Name="IF2">
       <Parameter ID="ActivateDevice" Value="1" />
     </Connector>
+    <Connector Name="IF3">
+      <Parameter ID="DNAConfiguration" Value="manual" />
+      <Parameter ID="CycleTime" Value="2000" />
+    </Connector>
     <Parameter ID="ConfigurationID" Value="Tmp_Recorder" />
     <Parameter ID="UserPartitionSize" Value="200" />
+    <Parameter ID="AutomaticTransferOfUserfiles" Value="on" />
     <Parameter ID="VolatileGlobalPvSize" Value="300000" />
     <Parameter ID="Cyclic8Stack" Value="20000" />
     <Group ID="FileDevice1" />
@@ -17,8 +22,8 @@
     <Parameter ID="FileDevicePath2" Value="C:/Temp" />
     <Group ID="FtpUser1" />
     <Parameter ID="FtpUsername1" Value="br" />
-    <Parameter ID="FtpUserPassword1" Value="B9fKGuUbjkGCgEptWUpgQ1eJbLeEvMYqPBCteWUIcCw=" />
-    <Parameter ID="FtpUserSalt1" Value="wEo/3/qm" />
+    <Parameter ID="FtpUserPassword1" Value="B+jJgvp9Np1Nx73dPwFagqyDiJQWzomgOnJThoU8F9Q=" Description="password" />
+    <Parameter ID="FtpUserSalt1" Value="Snq9ellj" />
     <Parameter ID="FTPAccessRight1" Value="0" />
     <Parameter ID="ActivateSdm" Value="0" />
     <Parameter ID="ActivateOpcUa" Value="1" />

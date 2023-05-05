@@ -20,6 +20,10 @@ TYPE
 		DAT_DOWNLOAD_2,
 		DAT_DOWNLOAD_3,
 		DAT_DOWNLOAD_4,
+		DAT_LOAD_VARS,
+		DAT_LOAD_VARS_1,
+		DAT_LOAD_VARS_2,
+		DAT_LOAD_VARS_3,
 		DAT_ERROR
 		);
 END_TYPE
@@ -39,6 +43,7 @@ TYPE
 		Delete : BOOL; (*Delete selected file *)
 		View : BOOL; (*View selected file*)
 		Download : BOOL; (*Download selected file*)
+		LoadConfig : BOOL; (*Load variable configuration from file*)
 		ErrorReset : BOOL; (*Reset pending errors*)
 	END_STRUCT;
 	datPAR : 	STRUCT  (*Recorder managment parameter structure*)

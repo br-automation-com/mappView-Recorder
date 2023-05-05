@@ -17,10 +17,10 @@
     <Object Type="Library" Language="binary" Description="The BRSystem library provides the user with a number of system functions for e.g. handling permanent memory, accessing exception information, etc.">brsystem</Object>
     <Object Type="Library" Language="binary" Description="This library contains FBKs for exchanging and formatting data (message based) via HTTP (TCP).">AsHttp</Object>
     <Object Type="Library" Language="binary" Description="The AsMem library makes it possible to manage memory blocks located in large memory areas (memory partitions).">AsMem</Object>
-    <Object Type="Library" Language="Binary" Description="Communication library for mappView widgets">MpServer</Object>
     <Object Type="Library" Language="Binary" Description="File explorer for B+R file devices">MpFile</Object>
     <Object Type="Library" Language="Binary" Description="Core library for mapp components">MpBase</Object>
-    <Object Type="Library" Language="Binary" Description="Data recording and archiving">MpData</Object>
     <Object Type="Library" Language="Binary" Description="mapp components diagnosis,hierarchy and unit handling">MpCom</Object>
+    <Object Type="Library" Language="Binary" Description="Data recording and archiving">MpData</Object>
+    <Object Type="Library" Language="Binary" Description="Communication library for mappView widgets">MpServer</Object>
   </Objects>
 </Package>

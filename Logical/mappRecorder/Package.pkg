@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?AutomationStudio Version=4.5.5.113 SP?>
+<?AutomationStudio FileVersion="4.9"?>
 <Package xmlns="http://br-automation.co.at/AS/Package">
   <Objects>
     <Object Type="File">DatTypes.typ</Object>
@@ -8,5 +8,6 @@
     <Object Type="Program" Language="IEC">YourTask</Object>
     <Object Type="File">changelog.txt</Object>
     <Object Type="File">HowToImport.pdf</Object>
+    <Object Type="Package">config</Object>
   </Objects>
 </Package>

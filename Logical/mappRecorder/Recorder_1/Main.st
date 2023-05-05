@@ -46,7 +46,7 @@ PROGRAM _CYCLIC
 					FOR idx:=0 TO RECORDER.DAT.RecordNum - 1 DO
 						// -------------------------------------------------------------------------------- 		
 						// Verify that file name contains filter											
-						IF (brsstrlen(ADR(RECORDER.VIS[VisuSlotID].RecordFilter)) = 0 OR IsInstr(ADR(RECORDER.DAT.RecordNames[idx]), ADR(RECORDER.VIS[VisuSlotID].RecordFilter))) THEN	
+						IF (brsstrlen(ADR(RECORDER.VIS[VisuSlotID].RecordFilter)) = 0 OR IsInstr(ADR(RECORDER.DAT.RecordNames[idx]), ADR(RECORDER.VIS[VisuSlotID].RecordFilter))) > 0 THEN	
 							String2DataProvider(ADR(RECORDER.DAT.RecordNames[idx]), ADR(tmpStr1));
 							RECORDER.VIS[VisuSlotID].RecordNames[idy] := tmpStr1;
 							idy := idy + 1;
@@ -99,8 +99,8 @@ PROGRAM _CYCLIC
 				// Reset data structure and trigger name refresh for vis
 				brsmemset(ADR(RECORDER.DAT), 0, SIZEOF(RECORDER.DAT));
 				brsmemset(ADR(RecordNumOld), 16#FF, SIZEOF(RecordNumOld));
-				rec_state := DAT_CFG_READ;
 				pvCnt := 1;
+				rec_state := DAT_CFG_READ;
 			// ---------------------------------------------------------------------------------------- 
 			// Command continues recording
 			ELSIF (RECORDER.CMD.Record = TRUE) THEN																
@@ -129,11 +129,15 @@ PROGRAM _CYCLIC
 				RECORDER.VIS[RECORDER.PAR.VisuSlotID].DownloadFileUrl := '';
 				RecordName := RECORDER.PAR.RecordName;
 				rec_state := DAT_DOWNLOAD;
+			// ----------------------------------------------------------------------------------------
+			// Load variable configuration file
+			ELSIF (RECORDER.CMD.LoadConfig = 1) THEN
+				rec_state := DAT_LOAD_VARS;
 			END_IF
 
 			// ---------------------------------------------------------------------------------------- 
 			// Check parameters																					
-			IF (RECORDER.CMD.Init OR RECORDER.CMD.Delete OR RECORDER.CMD.View OR RECORDER.CMD.Download OR RECORDER.CMD.Record) THEN
+			IF (RECORDER.CMD.Init OR RECORDER.CMD.Delete OR RECORDER.CMD.View OR RECORDER.CMD.Download OR RECORDER.CMD.LoadConfig OR RECORDER.CMD.Record) THEN
 				// Set busy state
 				RECORDER.StatusNo := ERR_FUB_BUSY;
 				// Make sure recorder was intialized
@@ -153,7 +157,7 @@ PROGRAM _CYCLIC
 					rec_state := CreateError(ADR(RECORDER), ERR_DAT_NAME_EMPTY, "new record name is empty", rec_state);
 				END_IF
 				// Make sure variable name has at least one entry
-				IF(DAT_VAR_LIST[1] = '') THEN
+				IF(DAT_VAR_LIST[1] = '' AND NOT RECORDER.CMD.LoadConfig) THEN					
 					rec_state := CreateError(ADR(RECORDER), ERR_DAT_VAR_NAME_EMPTY, "variable name is empty", rec_state);
 				END_IF
 			END_IF	
@@ -306,11 +310,12 @@ PROGRAM _CYCLIC
 			// OK																																				
 			IF (DClose.status = OK) THEN
 				// Reset command and return to wait state												
-				RECORDER.StatusText := "initializing complete";
-				RECORDER.CMD.Init	:= 0;
+				RECORDER.StatusText	:= "initializing complete";
+				RECORDER.CMD.Init := 0;
+				RECORDER.CMD.LoadConfig := 0;
 				RECORDER.CMD.Delete := 0;
 				RECORDER.PAR.Initialized := TRUE;
-				DClose.ident	:= 0;
+				DClose.ident := 0;
 				IF(has_oversized_items) THEN
 					rec_state := CreateError(ADR(RECORDER), ERR_DAT_NAME_LENGTH, "one or more record names exceeds maximum length", rec_state);
 				ELSE
@@ -481,7 +486,7 @@ PROGRAM _CYCLIC
 			// ---------------------------------------------------------------------------------------- 		
 			// Error
 			ELSIF (FOpen.status <> ERR_FUB_BUSY) THEN
-				CreateError(ADR(RECORDER), FOpen.status, "error opening file for download", rec_state);
+				rec_state := CreateError(ADR(RECORDER), FOpen.status, "error opening file for download", rec_state);
 			END_IF
 		// --------------------------------------------------------------------------------------------------------------------
 		// Download file
@@ -502,7 +507,7 @@ PROGRAM _CYCLIC
 			// ---------------------------------------------------------------------------------------- 		
 			// Error
 			ELSIF (FRead.status <> ERR_FUB_BUSY) THEN
-				CreateError(ADR(RECORDER), FRead.status, "error reading file for download", rec_state);
+				rec_state := CreateError(ADR(RECORDER), FRead.status, "error reading file for download", rec_state);
 			END_IF
 		// --------------------------------------------------------------------------------------------------------------------
 		// Download file
@@ -523,7 +528,7 @@ PROGRAM _CYCLIC
 			// ---------------------------------------------------------------------------------------- 		
 			// Error
 			ELSIF (FClose.status <> ERR_FUB_BUSY) THEN
-				CreateError(ADR(RECORDER), FClose.status, "error closing file for download", rec_state);
+				rec_state := CreateError(ADR(RECORDER), FClose.status, "error closing file for download", rec_state);
 			END_IF		
 		// --------------------------------------------------------------------------------------------------------------------
 		// Download file - web service
@@ -559,7 +564,7 @@ PROGRAM _CYCLIC
 			DownloadTimeout.PT := 300;
 			DownloadTimeout();
 			IF(DownloadTimeout.Q) THEN
-				CreateError(ADR(RECORDER), ERR_TIMEOUT_DOWNLOAD, "error download response timed out", rec_state);
+				rec_state := CreateError(ADR(RECORDER), ERR_TIMEOUT_DOWNLOAD, "error download response timed out", rec_state);
 			END_IF
 
 			// ----------------------------------------------------------------------------------------
@@ -576,7 +581,7 @@ PROGRAM _CYCLIC
 			// ---------------------------------------------------------------------------------------- 		
 			// Error
 			ELSIF (WebserviceDownload.status <> ERR_FUB_BUSY AND WebserviceDownload.status <> OK) THEN
-				CreateError(ADR(RECORDER), WebserviceDownload.status, "error sending web response", rec_state);
+				rec_state := CreateError(ADR(RECORDER), WebserviceDownload.status, "error sending web response", rec_state);
 			END_IF
 		// --------------------------------------------------------------------------------------------------------------------
 		// Download file - web service
@@ -594,7 +599,111 @@ PROGRAM _CYCLIC
 			// ---------------------------------------------------------------------------------------- 		
 			// Error
 			ELSIF (WebserviceDownload.status <> ERR_FUB_BUSY) THEN
-				CreateError(ADR(RECORDER), WebserviceDownload.status, "error sending web response", rec_state);
+				rec_state := CreateError(ADR(RECORDER), WebserviceDownload.status, "error sending web response", rec_state);
+			END_IF
+		// --------------------------------------------------------------------------------------------------------------------
+		// Load configuration
+		// --------------------------------------------------------------------------------------------------------------------
+		DAT_LOAD_VARS:						
+			// ----------------------------------------------------------------------------------------
+			// Initialize file open structure
+			FOpen.enable	:= TRUE;
+			FOpen.pDevice 	:= ADR(DeviceName);
+			FOpen.pFile		:= ADR(DAT_CONFIG);
+			FOpen();
+			
+			// ----------------------------------------------------------------------------------------
+			// OK
+			IF (FOpen.status = OK) THEN
+				// Make sure file fits into memory
+				IF(FOpen.filelen <= DAT_DOWNLOAD_SIZE) THEN
+					// Clear memory and reset web service
+					brsmemset(AsMemPartAllocClear_0.mem, 0, DAT_DOWNLOAD_SIZE);
+					rec_state := DAT_LOAD_VARS_1;
+				// File is too large
+				ELSE			
+					tmpWStr1 := "variable config file exceeds maximum buffer size of ";
+					brsitoa(DAT_DOWNLOAD_SIZE, ADR(tmpStr1));
+					brwcsconv(ADR(tmpWStr2),ADR(tmpStr1), brwU8toUC);
+					brwcscat(ADR(tmpWStr1), ADR(tmpWStr2));
+					brwcscat(ADR(tmpWStr1), ADR(" bytes"));				
+					rec_state := CreateError(ADR(RECORDER), ERR_MEM_DOWNLOAD, tmpWStr1, rec_state);
+				END_IF;
+			// ---------------------------------------------------------------------------------------- 		
+			// Error
+			ELSIF (FOpen.status <> ERR_FUB_BUSY) THEN
+				rec_state := CreateError(ADR(RECORDER), FOpen.status, "error opening variable config file", rec_state);
+			END_IF
+		// --------------------------------------------------------------------------------------------------------------------
+		// Load configuration
+		// --------------------------------------------------------------------------------------------------------------------
+		DAT_LOAD_VARS_1:						
+			// ----------------------------------------------------------------------------------------
+			// Initialize file read structure
+			FRead.enable	:= TRUE;
+			FRead.ident		:= FOpen.ident;
+			FRead.len		:= FOpen.filelen;
+			FRead.pDest		:= AsMemPartAllocClear_0.mem;
+			FRead();
+			
+			// ----------------------------------------------------------------------------------------
+			// OK
+			IF (FRead.status = OK) THEN
+				rec_state := DAT_LOAD_VARS_2;
+			// ---------------------------------------------------------------------------------------- 		
+			// Error
+			ELSIF (FRead.status <> ERR_FUB_BUSY) THEN
+				rec_state := CreateError(ADR(RECORDER), FRead.status, "error reading variable config file", rec_state);
+			END_IF
+		// --------------------------------------------------------------------------------------------------------------------
+		// Load configuration
+		// --------------------------------------------------------------------------------------------------------------------
+		DAT_LOAD_VARS_2:						
+			// ----------------------------------------------------------------------------------------
+			// Initialize file close structure
+			FClose.enable	:= TRUE;
+			FClose.ident	:= FOpen.ident;
+			FClose();
+			
+			// ----------------------------------------------------------------------------------------
+			// OK
+			IF (FClose.status = OK) THEN
+				// Reset variable list
+				brsmemset(ADR(DAT_VAR_LIST), 0, SIZEOF(DAT_VAR_LIST));
+				ida := 0;
+				idc := 1;
+				rec_state := DAT_LOAD_VARS_3;
+			// ---------------------------------------------------------------------------------------- 		
+			// Error
+			ELSIF (FClose.status <> ERR_FUB_BUSY) THEN
+				rec_state := CreateError(ADR(RECORDER), FClose.status, "error closing variable config file", rec_state);
+			END_IF
+		// --------------------------------------------------------------------------------------------------------------------
+		// Load configuration
+		// --------------------------------------------------------------------------------------------------------------------
+		DAT_LOAD_VARS_3:
+			idb := IsInstr(AsMemPartAllocClear_0.mem + ida, ADR(";"));
+			IF idb > 0 THEN
+				brsmemcpy(ADR(DAT_VAR_LIST[idc]), AsMemPartAllocClear_0.mem + ida, idb);
+				ReplaceString(ADR(DAT_VAR_LIST[idc]), ADR('$n'), ADR(''), FALSE);
+				ReplaceString(ADR(DAT_VAR_LIST[idc]), ADR('$r'), ADR(''), FALSE);				
+				ida := ida + idb + 1;
+				
+				IF ida >= FOpen.filelen THEN
+					// Reset data structure and trigger name refresh for vis
+					brsmemset(ADR(RECORDER.DAT), 0, SIZEOF(RECORDER.DAT));
+					brsmemset(ADR(RecordNumOld), 16#FF, SIZEOF(RecordNumOld));
+					pvCnt := 1;
+					rec_state := DAT_CFG_READ;
+				ELSE
+					// Make sure we have enough slots for variables
+					idc := idc + 1;			
+					IF idc > SIZEOF(DAT_VAR_LIST)/SIZEOF(DAT_VAR_LIST[1]) THEN					
+						rec_state := CreateError(ADR(RECORDER), ERR_DAT_VAR_NAME_NUM, "variable config file contains too many variables", rec_state);
+					END_IF
+				END_IF
+			ELSE
+				rec_state := CreateError(ADR(RECORDER), ERR_DAT_VAR_NAME_END, "variable config file contains too many variables", rec_state);
 			END_IF
 		// --------------------------------------------------------------------------------------------------------------------
 		// Error 

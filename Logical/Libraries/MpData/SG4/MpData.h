@@ -1,6 +1,6 @@
 /* Automation Studio generated header file */
 /* Do not edit ! */
-/* MpData 5.08.1 */
+/* MpData 5.15.0 */
 
 #ifndef _MPDATA_
 #define _MPDATA_
@@ -9,7 +9,7 @@ extern "C"
 {
 #endif
 #ifndef _MpData_VERSION
-#define _MpData_VERSION 5.08.1
+#define _MpData_VERSION 5.15.0
 #endif
 
 #include <bur/plctypes.h>
@@ -17,7 +17,7 @@ extern "C"
 #ifndef _BUR_PUBLIC
 #define _BUR_PUBLIC
 #endif
-#ifdef _SG4
+#ifdef _SG3
 		#include "MpBase.h"
 		#include "astime.h"
 		#include "sys_lib.h"
@@ -26,7 +26,7 @@ extern "C"
 		#include "DataObj.h"
 #endif
 
-#ifdef _SG3
+#ifdef _SG4
 		#include "MpBase.h"
 		#include "astime.h"
 		#include "sys_lib.h"
@@ -43,6 +43,8 @@ extern "C"
 		#include "FileIO.h"
 		#include "DataObj.h"
 #endif
+
+
 
 /* Datatypes and datatypes of function blocks */
 typedef enum MpDataRecordModeEnum
