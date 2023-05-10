@@ -4,6 +4,7 @@
   <Module Name="X20CP3687X" Type="X20CP3687X" Version="1.7.2.0">
     <Connector Name="IF2">
       <Parameter ID="ActivateDevice" Value="1" />
+      <Parameter ID="ActivateSnmp" Value="2" />
     </Connector>
     <Connector Name="IF3">
       <Parameter ID="DNAConfiguration" Value="manual" />
